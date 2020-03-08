@@ -103,3 +103,31 @@ $ py manage.py runserver
 ```
 
 [http://127.0.0.1:8000/myapp](http://127.0.0.1:8000/myapp)にアクセスして、 `This is the index view.` と表示されていることを確認する（ [http://127.0.0.1:8000/](http://127.0.0.1:8000/) ではなく [http://127.0.0.1:8000/myapp](http://127.0.0.1:8000/myapp) であることに気を付ける）
+
+## (Option) DB を設定
+
+SQLite 以外の DB を使う場合は、該当するバインディングをインストールし、 `mysite/settings.py` の DATABASES の 'default' 項目内の以下のキーを変更する。その後、 `CREATE DATABASE database_name;` を実行して DB を作成しておく（SQLite を使用する場合は不要）
+
+- ENGINE ... `django.db.backends.sqlite3` / `django.db.backends.postgresql` / `django.db.backends.mysql` / `django.db.backends.oracle`
+- NAME ... データベースの名前（デフォルト値は os.path.join(BASE_DIR, 'db.sqlite3') ）
+- HOST ... DB に接続する時に使用するホスト名（空文字だと `localhost` に接続）
+- USER ... DB に接続する時に使用するユーザー名
+- PASSWORD ... DB に接続する時に使用するパスワード
+
+## ロケールを設定
+
+`myproj/settings.py` を以下のように変更する
+
+```py
+// TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
+
+// USE_TZ = True
+USE_TZ = False
+```
+
+## テーブルを作成
+
+```ps
+$ py manage.py migrate
+```
