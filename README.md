@@ -50,3 +50,56 @@ $ py manage.py runserver
 ```
 
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)にアクセスして、 `The install worked successfully! Congratulations!` と表示されていることを確認する
+
+## アプリケーションを作成
+
+```ps
+$ py manage.py startapp myapp
+```
+
+### ビューを編集
+
+`myapp/views.py` に以下を追記する
+
+```py
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+```
+
+`myapp/urls.py` を作成して、以下を追記する
+
+```py
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+```
+
+`myproj/urls.py` を以下のように変更する
+
+```py
+//from django.urls import path
+from django.urls import include, path
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
+urlpatterns = [
+    path('myapp/', include('myapp.urls')),
+    path('admin/', admin.site.urls),
+]
+```
+
+### 動作確認
+
+```ps
+$ py manage.py runserver
+```
+
+[http://127.0.0.1:8000/myapp](http://127.0.0.1:8000/myapp)にアクセスして、 `This is the index view.` と表示されていることを確認する（ [http://127.0.0.1:8000/](http://127.0.0.1:8000/) ではなく [http://127.0.0.1:8000/myapp](http://127.0.0.1:8000/myapp) であることに気を付ける）
