@@ -131,3 +131,65 @@ USE_TZ = False
 ```ps
 $ py manage.py migrate
 ```
+
+## モデルを作成
+
+`myapp/models.py` を以下のように変更する
+
+```py
+class Item(models.Model):
+    item_title = models.CharField(max_length=200)
+    item_content = models.CharField(max_length=200)
+
+
+class SubItem(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    subtitle = models.CharField(max_length=200)
+    subcontent = models.CharField(max_length=200)
+```
+
+### モデルを有効化する
+
+`myproj/settings.py` を以下のように変更する
+
+```py
+INSTALLED_APPS = [
+    'myapp.apps.MyappConfig', // この行を追記
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+```
+
+`myapp/admin.py` に以下を追記する
+
+```py
+from .models import Question
+admin.site.register(Question)
+```
+
+```ps
+$ py manage.py makemigrations myapp
+$ py manage.py sqlmigrate myapp 0001
+$ py manage.py migrate
+```
+
+## admin サイトを用意
+
+### 管理ユーザーを作成
+
+```ps
+$ py manage.py createsuperuser
+(djangoenv) PS C:\Users\y\Documents\GitHub\Tutorial-Django\myproj> py manage.py createsuperuser
+Username (leave blank to use 'y'): y
+Email address: y@example.net
+Password:
+Password (again):
+Superuser created successfully.
+$ py manage.py runserver
+```
+
+[http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)にアクセスし、ログインする
