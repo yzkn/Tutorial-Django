@@ -180,13 +180,14 @@ $ py manage.py migrate
 #### (Option) DB を初期化する場合
 
 ```ps
+$ cd C:\Users\y\Documents\GitHub\Tutorial-Django\myproj
 $ py manage.py migrate --fake myapp zero
 $ find . -path "myapp/migrations/*.py" -not -name "__init__.py" -delete
 $ find . -path "myapp/migrations/*.pyc" -delete
 $ py manage.py makemigrations
 $ py manage.py sqlmigrate myapp 0001
 
-DBサーバ上で、テーブルを削除
+DBサーバ上で、 `myapp_item` と `myapp_subitem` テーブルを削除
 
 $ py manage.py migrate
 ```

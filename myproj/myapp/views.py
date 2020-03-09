@@ -1,26 +1,73 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views import generic
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .models import Item, SubItem
+from .forms import ItemForm, SubItemForm
 
 
-class IndexView(generic.ListView):
+class ItemListView(ListView):
+    """
+    GET(全件)
+    templates\myapp\モデル_list.htmlを使用
+    """
     model = Item
-    template_name = 'myapp/index.html'
-    context_object_name = 'latest_item_list'
-
-    def get_queryset(self):
-        """Return the last five published items."""
-        return Item.objects.order_by('-created_at')[:5]
+    paginate_by = 10  # ページネーション(10件ごとに表示)
 
 
-class DetailView(generic.DetailView):
+class ItemDetailView(DetailView):
+    """
+    GET(a record)
+    templates\myapp\モデル_detail.htmlを使用
+    """
     model = Item
-    template_name = 'myapp/detail.html'
 
 
-class ResultsView(generic.DetailView):
+class ItemCreateView(CreateView):
+    """
+    POST用画面
+    templates\myapp\モデル_form.htmlを使用
+    """
     model = Item
-    template_name = 'myapp/results.html'
+    form_class = ItemForm
+    success_url = reverse_lazy('item_list')
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(
+            self.request, 'Created: {}'.format(form.instance))
+        return result
+
+
+class ItemUpdateView(UpdateView):
+    """
+    PUT用画面
+    templates\myapp\モデル_form.htmlを使用
+    """
+    model = Item
+    form_class = ItemForm
+
+    success_url = reverse_lazy('item_list')
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(
+            self.request, 'Updated: {}'.format(form.instance))
+        return result
+
+
+class ItemDeleteView(DeleteView):
+    """
+    DELETE用画面
+    templates\myapp\モデル_confirm_delete.htmlを使用
+    """
+    model = Item
+    form_class = ItemForm
+
+    success_url = reverse_lazy('item_list')
+
+    def delete(self, request, *args, **kwargs):
+        result = super().delete(request, *args, **kwargs)
+        messages.success(
+            self.request, 'Removed: {}'.format(self.object))
+        return result
