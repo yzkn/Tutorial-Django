@@ -177,6 +177,20 @@ $ py manage.py sqlmigrate myapp 0001
 $ py manage.py migrate
 ```
 
+#### (Option) DB を初期化する場合
+
+```ps
+$ py manage.py migrate --fake myapp zero
+$ find . -path "myapp/migrations/*.py" -not -name "__init__.py" -delete
+$ find . -path "myapp/migrations/*.pyc" -delete
+$ py manage.py makemigrations
+$ py manage.py sqlmigrate myapp 0001
+
+DBサーバ上で、テーブルを削除
+
+$ py manage.py migrate
+```
+
 ## admin サイトを用意
 
 ### 管理ユーザーを作成
@@ -193,3 +207,9 @@ $ py manage.py runserver
 ```
 
 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)にアクセスし、ログインする
+
+## 汎用ビューを使ってビューを作成
+
+- `myproj\myapp\urls.py`
+- `myproj\myapp\views.py`
+- `myproj\myapp\templates\myapp\*.html`
