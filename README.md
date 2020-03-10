@@ -214,3 +214,29 @@ $ py manage.py runserver
 - `myproj\myapp\urls.py`
 - `myproj\myapp\views.py`
 - `myproj\myapp\templates\myapp\*.html`
+
+## テストデータを生成
+
+- `apps.py`
+
+```py
+...
+from django.db.models.signals import post_migrate
+
+
+class MyappConfig(AppConfig):
+    ...
+    def ready(self):
+        from .models import create_default_item, create_default_subitem
+        post_migrate.connect(create_default_item, sender=self)
+        post_migrate.connect(create_default_subitem, sender=self)
+```
+
+- `models.py`
+
+```py
+def create_default_item(sender, **kwargs):
+    for i in range(5):
+        Item.objects.get_or_create(
+            title='T{}'.format(i), content='C{}'.format(i))
+```

@@ -28,3 +28,13 @@ class SubItem(models.Model):
         blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+def create_default_item(sender, **kwargs):
+    for i in range(5):
+        Item.objects.get_or_create(
+            title='T{}'.format(i), content='C{}'.format(i))
+
+
+def create_default_subitem(sender, **kwargs):
+    pass
