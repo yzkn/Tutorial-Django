@@ -1,13 +1,13 @@
 {% extends 'myapp/base.html' %}
-{% block meta_title %}{{ object.subject }}{% endblock %}
-{% block page_title %}{{ object.subject }}{% endblock %}
+{% block meta_title %}{{ object.title }}{% endblock %}
+{% block page_title %}{{ object.title }}{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-12">
             <div class="card card-default">
-                <div class="card-body">
-                    {{ object.body|linebreaksbr }}
+                <div class="card-content">
+                    {{ object.content|linebreaksbr }}
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" href="{% url 'myapp:item_update' object.pk %}">修正</a>
