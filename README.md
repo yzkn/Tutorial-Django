@@ -239,4 +239,13 @@ def create_default_item(sender, **kwargs):
     for i in range(5):
         Item.objects.get_or_create(
             title='T{}'.format(i), content='C{}'.format(i))
+
+
+def create_default_subitem(sender, **kwargs):
+    for i in range(5):
+        SubItem.objects.get_or_create(
+            subtitle='T{}'.format(i),
+            subcontent='C{}'.format(i),
+            item_id=Item.objects.filter(title='T{}'.format(i)).first().pk
+        )
 ```
