@@ -9,10 +9,12 @@
 
             <p>削除してもよろしいですか? {{ object }}</p>
 
-            <form method="post">
+            <form method="post" style="display: inline-block;">
                 <button class="btn btn-danger">削除</button>
                 {% csrf_token %}
             </form>
+
+            <button class="btn btn-light" onClick="javascript:history.go(-1);">戻る</button>
 
         </div>
     </div>
