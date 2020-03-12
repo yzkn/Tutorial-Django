@@ -30,7 +30,7 @@ class ItemCreateView(CreateView):
     """
     model = Item
     form_class = ItemForm
-    success_url = reverse_lazy('item_list')
+    success_url = reverse_lazy('myapp:item_list')
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -47,7 +47,7 @@ class ItemUpdateView(UpdateView):
     model = Item
     form_class = ItemForm
 
-    success_url = reverse_lazy('item_list')
+    success_url = reverse_lazy('myapp:item_list')
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -64,7 +64,7 @@ class ItemDeleteView(DeleteView):
     model = Item
     form_class = ItemForm
 
-    success_url = reverse_lazy('item_list')
+    success_url = reverse_lazy('myapp:item_list')
 
     def delete(self, request, *args, **kwargs):
         result = super().delete(request, *args, **kwargs)

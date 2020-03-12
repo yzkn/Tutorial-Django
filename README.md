@@ -211,6 +211,21 @@ $ py manage.py runserver
 
 ## 汎用ビューを使ってビューを作成
 
+```ps
+$ cd C:\Users\y\Documents\GitHub\Tutorial-Django
+$ .\djangoenv\Scripts\activate
+$ py -m pip install django-bootstrap4
+```
+
+- `settings.py`
+
+```py
+INSTALLED_APPS = (
+    ...
+    'bootstrap4', # 追記
+)
+```
+
 - `myproj\myapp\urls.py`
 - `myproj\myapp\views.py`
 - `myproj\myapp\templates\myapp\*.html`

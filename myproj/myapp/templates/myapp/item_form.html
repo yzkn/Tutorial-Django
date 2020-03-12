@@ -1,21 +1,25 @@
 {% extends 'myapp/base.html' %}
-{% load bootstrap %}
+{% load bootstrap4 %}
 {% block meta_title %}{% if object.pk %}{{ object.title }}{% else %}新規作成{% endif %}{% endblock %}
 {% block page_title %}{% if object.pk %}{{ object.title }}{% else %}新規作成{% endif %}{% endblock %}
 {% block content %}
-<form method="post">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                {{ form|bootstrap }}
+{% if object.pk %}
+<form action="{% url 'myapp:item_update' object.pk %}" method="post">
+    {% else %}
+    <form action="{% url 'myapp:item_create' %}" method="post">
+        {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% bootstrap_form form layout='horizontal' %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary">{% if object.pk %}更新{% else %}保存{% endif %}</button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary">{% if object.pk %}更新{% else %}保存{% endif %}</button>
-            </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
-{% endblock %}
+        {% csrf_token %}
+    </form>
+    {% endblock %}
