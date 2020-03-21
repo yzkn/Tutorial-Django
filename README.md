@@ -2,6 +2,10 @@
 
 ---
 
+続きは [YA-androidapp/Tutorial-Django-Api-JWT](https://github.com/YA-androidapp/Tutorial-Django-Api-JWT)
+
+---
+
 ## Python をインストール
 
 [Download Python](https://www.python.org/downloads/) から最新版の Python インストーラー( [Feb. 24, 2020 時点](https://www.python.org/ftp/python/3.8.2/python-3.8.2-amd64-webinstall.exe) )をダウンロードして実行
